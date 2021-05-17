@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center" style="height:100vh; width:100vw;">
+        <h2 style="top: 0; position: absolute; ">Welcome to room {{room_no}} </h2>
+
+        <div id="messagescontainer" class="container" style="overflow-y: auto; width:40vw; height: 80vh; position: relative;">
+            <!-- <div id="left-text">heyo</div> -->
+        </div>
+
+        <div class="d-flex justify-content-center" style="position: absolute; bottom: 20px; width:100vw;">
+            <input id="messageinputfield" type="text" name="" class="form-control" style="text-align: center; width: 40vw;">
+            <input id="sendbutton" type="submit" name="" value="send" class="btn btn-info" >
+        </div>
+    </div> 
+{% endblock content %}
+
+
+<script type="textjavascript">
+    const ChatSocket = new WebSocket('ws://'+window.location.host+'/ws/chat/{{room_no}}/')
+
+    document.querySelector('#sendbutton').onclick  = function(e){
+        const message = document.querySelector(#messageinputfield).value;
+        ChatSocket.send(JSON.stringify({'message': '{{name}}: '+message} ));
+        document.querySelector('#messageinputfield').value = '';
+    }
+
+    <!-- on recieving msg -->
+    ChatSocket.onmessage = function(e){
+        const data = JSON.parse(e.data);
+        document.querySelector('#messagescontainer').innerHTML += <div id="left-text"> '+data.message+' </div>
+    }
+
+</script>
+    
+   
